@@ -1,548 +1,274 @@
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <!-- Critical: Viewport settings for Mobile -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>The Iron-Dad | Dad Glow-Up System</title>
-  
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Oswald:wght@400;500;700&display=swap" rel="stylesheet">
+import heroImage from "@/assets/hero-dad.jpg";
+import { Button } from "@/components/ui/button";
+import { Check, Dumbbell, Flame, Clock, Users, Star, ChevronRight, Zap, UtensilsCrossed, BarChart3, BookOpen } from "lucide-react";
 
-  <style>
-    /* --- RESET & VARIABLES --- */
-    :root {
-      --bg-body: #0b0f14;       /* Deep Black/Navy background */
-      --card-bg: #151a21;       /* Slightly lighter card bg */
-      --accent-blue: #2c6fdf;   /* Blue accent */
-      --text-main: #ffffff;     /* Pure white text */
-      --text-muted: #9ca3af;    /* Muted gray text */
-      --gradient-btn: linear-gradient(135deg, #2c6fdf 0%, #1d4ed8 100%);
-      --border-color: rgba(255,255,255,0.08);
-    }
+const CTAButton = ({ children, className = "" }: { children: React.ReactNode; className?: string }) => (
+  <Button variant="cta" size="lg" className={`h-14 px-10 text-lg ${className}`}>
+    {children} <ChevronRight className="ml-1" />
+  </Button>
+);
 
-    * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-    
-    html { scroll-behavior: smooth; }
-
-    body {
-      font-family: 'Inter', sans-serif;
-      background-color: var(--bg-body);
-      color: var(--text-main);
-      line-height: 1.5;
-      overflow-x: hidden;
-      -webkit-font-smoothing: antialiased; /* Smooths fonts on iPhones */
-    }
-
-    h1, h2, h3, h4 {
-      font-family: 'Oswald', sans-serif;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      color: var(--text-main);
-      margin-bottom: 1rem;
-    }
-
-    /* ANIMATIONS */
-    .reveal {
-      opacity: 0;
-      transform: translateY(15px);
-      transition: all 0.5s ease-out;
-    }
-
-    .reveal.active {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .container { 
-      max-width: 580px; /* Narrow width optimized for phone reading */
-      margin: 0 auto; 
-      padding: 0 20px; 
-    }
-
-    /* BUTTONS - Thumb-friendly size */
-    .btn {
-      display: block;
-      width: 100%;
-      padding: 14px 20px;
-      background: var(--gradient-btn);
-      color: var(--text-main);
-      text-align: center;
-      font-family: 'Oswald', sans-serif;
-      font-size: 1.05rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      border-radius: 8px;
-      text-decoration: none;
-      box-shadow: 0 4px 12px rgba(44, 111, 223, 0.3);
-      transition: transform 0.2s;
-      border: 1px solid rgba(255,255,255,0.1);
-      cursor: pointer;
-      margin-top: 10px;
-    }
-
-    .btn:active { transform: scale(0.98); }
-    .btn-small { width: auto !important; padding: 8px 16px !important; font-size: 0.85rem !important; }
-
-    /* NAVIGATION */
-    nav {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      background: rgba(11, 15, 20, 0.95);
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid var(--border-color);
-      z-index: 1000;
-      padding: 12px 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .logo {
-      font-size: 1.25rem;
-      font-weight: 700;
-      color: var(--text-main);
-      text-decoration: none;
-      font-family: 'Oswald', sans-serif;
-    }
-
-    .highlight { color: var(--accent-blue); }
-
-    /* HERO SECTION */
-    .hero {
-      min-height: 90vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      padding-top: 80px;
-      padding-bottom: 40px;
-      background: radial-gradient(circle at 50% 0%, #1e293b 0%, var(--bg-body) 60%);
-    }
-
-    .badge-pill {
-      display: inline-block;
-      padding: 5px 12px;
-      border-radius: 20px;
-      background: rgba(44, 111, 223, 0.15);
-      color: var(--accent-blue);
-      font-weight: 600;
-      font-size: 0.8rem;
-      margin-bottom: 15px;
-      border: 1px solid rgba(44, 111, 223, 0.3);
-      text-transform: uppercase;
-    }
-
-    .hero h1 {
-      font-size: 2.5rem; /* Smaller for mobile */
-      line-height: 1.1;
-      margin-bottom: 1.2rem;
-    }
-
-    .hero p {
-      font-size: 1.05rem;
-      color: var(--text-muted);
-      max-width: 100%;
-      margin: 0 auto 30px auto;
-      line-height: 1.5;
-    }
-
-    /* SECTIONS GENERAL */
-    section { padding: 50px 0; }
-
-    .section-title {
-      text-align: center;
-      font-size: 1.8rem;
-      margin-bottom: 25px;
-    }
-
-    .card-list {
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-      margin-top: 30px;
-    }
-
-    .feature-card {
-      background: var(--card-bg);
-      padding: 20px;
-      border-radius: 12px;
-      border: 1px solid var(--border-color);
-      transition: 0.3s;
-    }
-
-    .feature-card:hover { transform: translateY(-3px); border-color: var(--accent-blue); }
-
-    .icon-box {
-      font-size: 1.5rem;
-      color: var(--accent-blue);
-      margin-bottom: 12px;
-    }
-
-    .feature-text h3 {
-      font-size: 1.1rem;
-      margin-bottom: 8px;
-    }
-
-    .feature-text p {
-      font-size: 0.95rem;
-      color: var(--text-muted);
-    }
-
-    /* PRICING CARD */
-    .pricing-card {
-      background: var(--card-bg);
-      border: 2px solid var(--accent-blue);
-      border-radius: 16px;
-      padding: 30px 20px;
-      text-align: center;
-      max-width: 500px;
-      margin: 0 auto;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.5);
-      position: relative;
-    }
-
-    .price-badge {
-      position: absolute;
-      top: -12px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: var(--accent-blue);
-      color: white;
-      padding: 4px 12px;
-      border-radius: 12px;
-      font-size: 0.75rem;
-      font-weight: 700;
-      text-transform: uppercase;
-    }
-
-    .old-price {
-      text-decoration: line-through;
-      color: var(--text-muted);
-      font-size: 1rem;
-    }
-
-    .current-price {
-      font-size: 3.5rem;
-      font-weight: 700;
-      font-family: 'Oswald';
-      color: var(--text-main);
-      line-height: 1;
-      margin: 5px 0 15px 0;
-    }
-
-    .checklist {
-      list-style: none;
-      text-align: left;
-      margin: 20px 0;
-      padding: 0 10px;
-    }
-
-    .checklist li {
-      padding: 8px 0;
-      border-bottom: 1px solid rgba(255,255,255,0.05);
-      color: var(--text-muted);
-      font-size: 0.95rem;
-    }
-    .checklist li:last-child { border-bottom: none; }
-
-    /* REVIEWS */
-    .review-grid {
-      display: grid;
-      gap: 15px;
-      margin-top: 30px;
-    }
-
-    .review-item {
-      background: var(--card-bg);
-      padding: 20px;
-      border-radius: 12px;
-      border: 1px solid var(--border-color);
-    }
-
-    .stars { color: var(--accent-blue); margin-bottom: 8px; font-size: 1rem; }
-    
-    .review-quote {
-      font-style: italic;
-      color: var(--text-main);
-      margin-bottom: 12px;
-      font-size: 0.95rem;
-      line-height: 1.5;
-    }
-
-    .reviewer-name {
-      font-size: 0.9rem;
-      font-weight: 600;
-      color: var(--text-muted);
-    }
-
-    /* FAQ */
-    details {
-      background: var(--card-bg);
-      margin-bottom: 12px;
-      border-radius: 8px;
-      border: 1px solid var(--border-color);
-      overflow: hidden;
-    }
-
-    summary {
-      padding: 15px 20px;
-      font-weight: 600;
-      cursor: pointer;
-      color: var(--text-main);
-      position: relative;
-      font-size: 0.95rem;
-      list-style: none; /* Hides default triangle */
-    }
-
-    summary::-webkit-details-marker { display: none; } /* Hide default triangle */
-
-    summary::after {
-      content: "+";
-      position: absolute;
-      right: 20px;
-      font-size: 1.2rem;
-      color: var(--accent-blue);
-    }
-
-    details[open] summary::after { content: "-"; }
-
-    .answer-text {
-      padding: 15px 20px;
-      border-top: 1px solid rgba(255,255,255,0.05);
-      color: var(--text-muted);
-      font-size: 0.95rem;
-      background: rgba(0,0,0,0.2);
-    }
-
-    /* FOOTER */
-    footer {
-      border-top: 1px solid var(--border-color);
-      padding: 30px 20px;
-      text-align: center;
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      background: #080b10;
-    }
-    
-    footer a { color: var(--text-muted); text-decoration: none; margin: 0 10px; }
-
-    /* DESKTOP STYLES */
-    @media(min-width: 768px) {
-      .hero h1 { font-size: 3.5rem; }
-      
-      .card-list { flex-direction: row; flex-wrap: wrap; }
-      .feature-card { flex: 1; min-width: 250px; }
-      
-      .review-grid { grid-template-columns: repeat(2, 1fr); }
-      
-      .btn { width: auto; }
-    }
-  </style>
-</head>
-<body>
-
-  <!-- NAV -->
-  <nav>
-    <a href="#" class="logo">IRON<span class="highlight">DAD</span>.</a>
-    <a href="#pricing" class="btn btn-small">BUY NOW</a>
-  </nav>
-
-  <!-- HERO -->
-  <header class="hero reveal active">
-    <span class="badge-pill">For Fathers Over 35</span>
-    <h1>Skip The Gym.<br>Build Your Body.</h1>
-    
-    <p>A simple 90-day protocol to lose belly fat, gain strength, and improve energy—without spending hours in the gym.</p>
-    
-    <a href="#pricing" class="btn">START MY TRANSFORMATION</a>
-
-    <div style="margin-top: 30px; font-size: 0.8rem; color: var(--text-muted);">
-      Based on David Carter's story • Age 52 Transformation
-    </div>
-  </header>
-
-  <!-- BENEFITS -->
-  <section id="benefits">
-    <div class="container">
-      <h2 class="section-title reveal">Why This Works For Dads</h2>
-      
-      <div class="card-list">
-        <div class="feature-card reveal">
-          <div class="icon-box">⏱️</div>
-          <div class="feature-text">
-            <h3>Under 45 Mins</h3>
-            <p>No commute needed. Short, intense workouts you can do at home.</p>
+const HeroSection = () => (
+  <section className="relative min-h-screen flex items-center overflow-hidden">
+    <div className="absolute inset-0 bg-gradient-to-r from-background via-background/95 to-background/40 z-10" />
+    <img src={heroImage} alt="Transformed dad" className="absolute right-0 top-0 h-full w-1/2 object-cover object-center opacity-60 md:opacity-80" />
+    <div className="container relative z-20 py-20">
+      <div className="max-w-2xl space-y-6">
+        <span className="inline-block border border-primary/30 bg-primary/10 text-primary px-4 py-1.5 rounded-full text-sm font-medium tracking-wide uppercase font-display">
+          90-Day Transformation
+        </span>
+        <h1 className="text-5xl md:text-7xl font-bold leading-[0.95] text-foreground">
+          From <span className="text-gradient-gold">Dad Bod</span> to
+          <br />
+          <span className="text-gradient-gold">Dad Strong</span>
+        </h1>
+        <p className="text-lg text-muted-foreground max-w-lg leading-relaxed">
+          The simple 90-day system that helped a 52-year-old father lose the gut, build real strength, and get his confidence back. No gym bro science. No extreme diets.
+        </p>
+        <div className="flex flex-col sm:flex-row gap-4 pt-2">
+          <CTAButton>Start Your Glow-Up</CTAButton>
+          <div className="flex items-center gap-2 text-muted-foreground">
+            <span className="text-2xl font-display font-bold text-primary">$10</span>
+            <span className="text-sm">one-time<br/>payment</span>
           </div>
         </div>
-        
-        <div class="feature-card reveal stagger-1">
-          <div class="icon-box">🍔</div>
-          <div class="feature-text">
-            <h3>No Diet Struggles</h3>
-            <p>Eat enough food to build muscle without starving yourself.</p>
-          </div>
-        </div>
-
-        <div class="feature-card reveal stagger-2">
-          <div class="icon-box">📊</div>
-          <div class="feature-text">
-            <h3>Track Everything</h3>
-            <p>Digital dashboard included to see results instantly.</p>
-          </div>
-        </div>
-
-        <div class="feature-card reveal stagger-3">
-          <div class="icon-box">🛡️</div>
-          <div class="feature-text">
-            <h3>Lifetime Access</h3>
-            <p>Pay once, keep the guides forever. Updated for life.</p>
-          </div>
+        <div className="flex gap-6 pt-4 text-sm text-muted-foreground">
+          <span className="flex items-center gap-1.5"><Check className="w-4 h-4 text-primary" /> 90-Day Plan</span>
+          <span className="flex items-center gap-1.5"><Check className="w-4 h-4 text-primary" /> Meal Guide</span>
+          <span className="flex items-center gap-1.5"><Check className="w-4 h-4 text-primary" /> Progress Tracker</span>
         </div>
       </div>
     </div>
   </section>
+);
 
-  <!-- REVIEWS -->
-  <section id="reviews" style="background: #080b10;">
-    <div class="container">
-      <h2 class="section-title reveal">Happy Customers</h2>
-      <div class="review-grid">
-        
-        <div class="review-item reveal">
-          <div class="stars">★★★★★</div>
-          <p class="review-quote">"I lost 15lbs in month 1. It's not magic, it just fits my schedule."</p>
-          <div class="reviewer-name">James W., Engineer</div>
+const ProblemSection = () => {
+  const problems = [
+    { icon: Flame, title: "Belly Fat Won't Budge", desc: "You've tried cutting calories, skipping meals, even those late-night ab workouts. Nothing sticks." },
+    { icon: Zap, title: "Zero Energy", desc: "You're running on coffee and willpower. By 3pm you're done. Weekends are for recovering, not living." },
+    { icon: Clock, title: "No Time", desc: "Between work, kids, and everything else, there's no time left for a 2-hour gym session." },
+    { icon: Users, title: "Losing Confidence", desc: "You avoid mirrors. Old photos remind you of a different person. You want that guy back." },
+  ];
+
+  return (
+    <section className="section-darker py-24">
+      <div className="container">
+        <div className="text-center max-w-2xl mx-auto mb-16">
+          <h2 className="text-4xl md:text-5xl font-bold mb-4">Sound <span className="text-gradient-gold">Familiar?</span></h2>
+          <p className="text-muted-foreground text-lg">You're not lazy. You're not broken. You just don't have the right system.</p>
         </div>
-
-        <div class="review-item reveal stagger-1">
-          <div class="stars">★★★★★</div>
-          <p class="review-quote">"Stopped guessing at the gym. The tracker keeps me honest even on busy days."</p>
-          <div class="reviewer-name">David C., Sales Director</div>
+        <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+          {problems.map((p) => (
+            <div key={p.title} className="bg-card border-gradient-gold rounded-xl p-6 flex gap-4">
+              <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+                <p.icon className="w-6 h-6 text-primary" />
+              </div>
+              <div>
+                <h3 className="text-lg font-display font-semibold mb-1 text-foreground">{p.title}</h3>
+                <p className="text-muted-foreground text-sm leading-relaxed">{p.desc}</p>
+              </div>
+            </div>
+          ))}
         </div>
-
-        <div class="review-item reveal">
-          <div class="stars">★★★★★</div>
-          <p class="review-quote">"Finally feel energetic during the school run. The meals were simple."</p>
-          <div class="reviewer-name">Mike T., Teacher</div>
-        </div>
-
-        <div class="review-item reveal stagger-1">
-          <div class="stars">★★★★★</div>
-          <p class="review-quote">"Lost the gut and built arms again. Best investment I've made for myself."</p>
-          <div class="reviewer-name">Tom B., Father of 3</div>
-        </div>
-
       </div>
-    </div>
-  </section>
+    </section>
+  );
+};
 
-  <!-- WHAT'S INCLUDED -->
-  <section id="products">
-    <div class="container">
-      <h2 class="section-title reveal">Everything You Get</h2>
-      
-      <div class="card-list">
-        <div class="feature-card reveal stagger-1" style="flex-direction: row-reverse; text-align: right;">
-           <!-- Placeholder icon instead of image -->
-          <div class="feature-text" style="text-align: right;">
-            <h3>Phase 1 Guide</h3>
-            <p>Comprehensive PDF Workbooks focused on Calisthenics.</p>
-          </div>
-          <div class="icon-box">📘</div>
-        </div>
-
-        <div class="feature-card reveal stagger-2">
-          <div class="icon-box">🥗</div>
-          <div class="feature-text">
-            <h3>Nutrition Blueprint</h3>
-            <p>Family-Friendly Meals & Grocery Shopping Lists.</p>
+const StorySection = () => (
+  <section className="section-dark py-24">
+    <div className="container max-w-4xl">
+      <div className="grid md:grid-cols-[300px_1fr] gap-12 items-center">
+        <div className="relative">
+          <img src={heroImage} alt="David Carter" className="rounded-xl border-gradient-gold w-full" />
+          <div className="absolute -bottom-4 -right-4 bg-primary text-primary-foreground px-4 py-2 rounded-lg font-display font-bold text-sm">
+            AGE 52
           </div>
         </div>
+        <div className="space-y-5">
+          <h2 className="text-4xl md:text-5xl font-bold">Meet <span className="text-gradient-gold">David Carter</span></h2>
+          <p className="text-muted-foreground leading-relaxed">
+            At 52, David was 40 pounds overweight, exhausted every day, and couldn't keep up with his kids. He'd tried every diet, every app, every "quick fix." Nothing worked because nothing was built for a real dad's life.
+          </p>
+          <p className="text-muted-foreground leading-relaxed">
+            So he built his own system. Simple workouts he could do in 30 minutes. Meals his family would actually eat. A daily tracker that kept him honest.
+          </p>
+          <p className="text-foreground font-medium text-lg">
+            90 days later, he lost 35 pounds, doubled his energy, and his kids started calling him "the strong dad."
+          </p>
+          <p className="text-muted-foreground leading-relaxed">
+            Now he's sharing exactly what he did — so you can do it too.
+          </p>
+        </div>
       </div>
     </div>
   </section>
+);
 
-  <!-- PRICING -->
-  <section id="pricing" class="reveal">
-    <div class="container">
-      <div class="pricing-card">
-        <div class="price-badge">Best Value</div>
-        <h3 style="color: var(--text-muted); font-size: 1rem; font-weight: 400; margin-bottom: 10px;">ONE-TIME PAYMENT</h3>
-        <div class="old-price">$197 Value</div>
-        <div class="current-price">$47</div>
-        
-        <ul class="checklist">
-          <li>Complete 90-Day Workout Guide</li>
-          <li>Meal Prep Cookbook</li>
-          <li>Digital Tracker Access</li>
-        </ul>
+const WhatYouGetSection = () => {
+  const items = [
+    { icon: Dumbbell, title: "90-Day Workout Plan", desc: "3 beginner-friendly workouts per week. 30 minutes each. No gym required.", tag: "Core" },
+    { icon: UtensilsCrossed, title: "Simple Meal Plan", desc: "Easy meals your family will eat too. Includes meal prep guide and grocery lists.", tag: "Nutrition" },
+    { icon: BarChart3, title: "Progress Tracker", desc: "Notion template to track workouts, meals, weight, and wins. See your progress daily.", tag: "Tracking" },
+    { icon: BookOpen, title: "Step-by-Step Guide", desc: "Practical tips for sleep, energy, discipline, and building habits that last.", tag: "Habits" },
+  ];
 
-        <!-- REPLACE WITH SHOPIFY LINK -->
-        <a href="https://your-shopify-checkout-link.com/products/the-iron-dad-system" class="btn">BUY NOW →</a>
+  return (
+    <section className="section-darker py-24">
+      <div className="container">
+        <div className="text-center max-w-2xl mx-auto mb-16">
+          <h2 className="text-4xl md:text-5xl font-bold mb-4">Everything You <span className="text-gradient-gold">Need</span></h2>
+          <p className="text-muted-foreground text-lg">No fluff. No filler. Just a proven system that works for real dads.</p>
+        </div>
+        <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+          {items.map((item) => (
+            <div key={item.title} className="bg-card border-gradient-gold rounded-xl p-8 space-y-3 hover:glow-gold transition-shadow duration-500">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
+                  <item.icon className="w-5 h-5 text-primary" />
+                </div>
+                <span className="text-xs font-display uppercase tracking-widest text-primary">{item.tag}</span>
+              </div>
+              <h3 className="text-xl font-display font-bold text-foreground">{item.title}</h3>
+              <p className="text-muted-foreground text-sm leading-relaxed">{item.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const WhyItWorksSection = () => {
+  const reasons = [
+    { stat: "3x", label: "Workouts / Week", desc: "That's it. No 6-day splits." },
+    { stat: "30", label: "Minutes Each", desc: "Shorter than a Netflix episode." },
+    { stat: "0", label: "Gym Memberships", desc: "Do it at home. Or the garage." },
+    { stat: "100%", label: "Dad Approved", desc: "Built around jobs, kids, and real life." },
+  ];
+
+  return (
+    <section className="section-dark py-24">
+      <div className="container">
+        <div className="text-center max-w-2xl mx-auto mb-16">
+          <h2 className="text-4xl md:text-5xl font-bold mb-4">Why This <span className="text-gradient-gold">Works</span></h2>
+          <p className="text-muted-foreground text-lg">It's not about doing more. It's about doing the right things consistently.</p>
+        </div>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
+          {reasons.map((r) => (
+            <div key={r.label} className="text-center space-y-2 p-6">
+              <div className="text-5xl font-display font-bold text-gradient-gold">{r.stat}</div>
+              <div className="text-sm font-display uppercase tracking-wider text-foreground">{r.label}</div>
+              <div className="text-xs text-muted-foreground">{r.desc}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const TestimonialsSection = () => {
+  const testimonials = [
+    { name: "Mike R., 41", text: "I've tried everything. This is the first program I actually finished. Down 22 lbs and my wife noticed in week 3.", stars: 5 },
+    { name: "Jason T., 38", text: "30-minute workouts that actually work? Sign me up. I'm in the best shape I've been since college.", stars: 5 },
+    { name: "Carlos M., 55", text: "I thought getting fit after 50 was impossible. David's system proved me wrong. My energy is through the roof.", stars: 5 },
+  ];
+
+  return (
+    <section className="section-darker py-24">
+      <div className="container">
+        <div className="text-center max-w-2xl mx-auto mb-16">
+          <h2 className="text-4xl md:text-5xl font-bold mb-4">Dads Who <span className="text-gradient-gold">Did It</span></h2>
+        </div>
+        <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+          {testimonials.map((t) => (
+            <div key={t.name} className="bg-card border-gradient-gold rounded-xl p-8 space-y-4">
+              <div className="flex gap-1">
+                {Array.from({ length: t.stars }).map((_, i) => (
+                  <Star key={i} className="w-4 h-4 text-primary fill-primary" />
+                ))}
+              </div>
+              <p className="text-foreground text-sm leading-relaxed italic">"{t.text}"</p>
+              <p className="text-muted-foreground text-sm font-display font-semibold">— {t.name}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const PricingSection = () => (
+  <section className="section-dark py-24">
+    <div className="container">
+      <div className="max-w-lg mx-auto text-center">
+        <h2 className="text-4xl md:text-5xl font-bold mb-4">Get Started <span className="text-gradient-gold">Today</span></h2>
+        <p className="text-muted-foreground text-lg mb-10">Less than the cost of a single fast food meal. More value than a $200/month gym membership.</p>
+        <div className="bg-card border-gradient-gold rounded-2xl p-10 glow-gold space-y-6">
+          <div className="font-display">
+            <span className="text-6xl font-bold text-gradient-gold">$10</span>
+            <span className="text-muted-foreground text-lg ml-2">one-time</span>
+          </div>
+          <ul className="space-y-3 text-left max-w-xs mx-auto">
+            {[
+              "90-Day Workout Plan",
+              "Simple Meal Plan & Prep Guide",
+              "Notion Progress Tracker",
+              "Step-by-Step Habit Guide",
+              "Lifetime Access",
+            ].map((item) => (
+              <li key={item} className="flex items-center gap-3 text-foreground text-sm">
+                <Check className="w-5 h-5 text-primary flex-shrink-0" />
+                {item}
+              </li>
+            ))}
+          </ul>
+          <CTAButton className="w-full">Start Your Dad Glow-Up</CTAButton>
+          <p className="text-xs text-muted-foreground">Instant digital delivery. No subscriptions. No BS.</p>
+        </div>
       </div>
     </div>
   </section>
+);
 
-  <!-- FAQ -->
-  <section id="faq">
-    <div class="container">
-      <h2 class="section-title reveal">Common Questions</h2>
-      
-      <details class="reveal">
-        <summary>Do I need a gym?</summary>
-        <div class="answer-text">No. This program uses calisthenics designed to be done in a living room or garage.</div>
-      </details>
-      
-      <details class="reveal">
-        <summary>Is this suitable for beginners?</summary>
-        <div class="answer-text">Yes. Phase 1 rebuilds your foundation safely so you don't get injured.</div>
-      </details>
-
-      <details class="reveal">
-        <summary>How long do workouts take?</summary>
-        <div class="answer-text">Short and intense. About 45 minutes from start to finish.</div>
-      </details>
-
-      <details class="reveal">
-        <summary>What if I'm over 50?</summary>
-        <div class="answer-text">Absolutely. Our founder started at 52 with joint health and functional strength in mind.</div>
-      </details>
+const FinalCTASection = () => (
+  <section className="section-darker py-24">
+    <div className="container text-center max-w-2xl mx-auto space-y-6">
+      <h2 className="text-4xl md:text-5xl font-bold">Your Kids Are <span className="text-gradient-gold">Watching</span></h2>
+      <p className="text-muted-foreground text-lg leading-relaxed">
+        Every day you wait is another day your kids see a dad who gave up on himself. Be the dad who showed up. Be the dad who changed. Be the dad they want to become.
+      </p>
+      <div className="pt-4">
+        <CTAButton>Start Your Glow-Up — $10</CTAButton>
+      </div>
+      <p className="text-xs text-muted-foreground pt-4">Join hundreds of dads who already took the first step.</p>
     </div>
   </section>
+);
 
-  <footer>
-    <p>&copy; 2024 Iron-Dad Systems. All rights reserved.</p>
-    <p style="margin-top: 10px;">
-      <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a>
-    </p>
+const Footer = () => (
+  <footer className="border-t border-border py-8">
+    <div className="container text-center text-xs text-muted-foreground">
+      © {new Date().getFullYear()} Dad Glow-Up System. All rights reserved.
+    </div>
   </footer>
+);
 
-  <!-- ANIMATION SCRIPT -->
-  <script>
-    window.addEventListener('scroll', revealElements);
-    
-    function revealElements() {
-      const reveals = document.querySelectorAll('.reveal');
-      
-      for (let i = 0; i < reveals.length; i++) {
-        let windowHeight = window.innerHeight;
-        let elementTop = reveals[i].getBoundingClientRect().top;
-        let elementVisible = 150;
-        
-        if (elementTop < windowHeight - elementVisible) {
-          reveals[i].classList.add('active');
-        }
-      }
-    }
-    
-    // Trigger immediately on load
-    setTimeout(revealElements, 100);
-  </script>
+const Index = () => {
+  return (
+    <div className="min-h-screen">
+      <HeroSection />
+      <ProblemSection />
+      <StorySection />
+      <WhatYouGetSection />
+      <WhyItWorksSection />
+      <TestimonialsSection />
+      <PricingSection />
+      <FinalCTASection />
+      <Footer />
+    </div>
+  );
+};
 
-</body>
-</html>
+export default Index;
