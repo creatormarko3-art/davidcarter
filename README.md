@@ -45,7 +45,7 @@
     .reveal {
       opacity: 0;
       transform: translateY(25px);
-      transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+      transition: all 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
     }
 
     .reveal.active {
@@ -77,6 +77,8 @@
       border: 1px solid var(--border-color);
       cursor: pointer;
       margin-top: 15px;
+      position: relative;
+      overflow: hidden;
     }
 
     .btn:hover {
@@ -141,7 +143,7 @@
     }
 
     /* SECTIONS */
-    section { padding: 80px 0; }
+    section { padding: 60px 0; }
 
     .card-grid {
       display: grid;
@@ -151,7 +153,7 @@
 
     .card {
       background: var(--bg-card);
-      padding: 30px;
+      padding: 25px;
       border-radius: 12px;
       border: 1px solid var(--border-color);
       transition: 0.3s;
@@ -169,28 +171,29 @@
     .showcase-item {
       background: var(--bg-card);
       border-radius: 12px;
-      padding: 30px;
-      margin-bottom: 30px;
+      padding: 20px;
+      margin-bottom: 20px;
       border-left: 4px solid var(--accent-blue);
       display: flex;
       flex-direction: column;
-      gap: 20px;
+      gap: 15px;
     }
 
     .feature-list li {
       list-style: none;
-      margin-bottom: 12px;
+      margin-bottom: 8px;
       display: flex;
       align-items: center;
       gap: 10px;
       color: var(--text-white);
+      font-size: 0.95rem;
     }
 
-    .check-mark { color: var(--accent-blue); font-weight: bold; font-size: 1.2rem; }
+    .check-mark { color: var(--accent-blue); font-weight: bold; font-size: 1.1rem; }
 
     .placeholder-img {
-      flex: 1;
-      height: 250px;
+      width: 100%;
+      height: 220px;
       background: #0f172a;
       border: 1px dashed #334155;
       border-radius: 8px;
@@ -202,9 +205,72 @@
       text-align: center;
       padding: 20px;
       overflow: hidden;
+      object-fit: cover;
     }
 
-    .showcase-text { flex: 1; }
+    .showcase-text { flex: 1; padding-left: 10px; }
+
+    /* TRANSFORMATIONS SECTION */
+    .transformation-section {
+      background: #0b1120;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .tf-grid {
+      display: grid;
+      gap: 20px;
+      margin-top: 30px;
+    }
+
+    .tf-card {
+      background: var(--bg-card);
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+    }
+
+    .tf-image-container {
+      position: relative;
+      height: 250px;
+      background: #0f172a;
+      overflow: hidden;
+    }
+
+    .tf-image-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .tf-badge {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: var(--accent-blue);
+      color: white;
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+
+    .tf-info {
+      padding: 20px;
+      text-align: center;
+    }
+
+    .tf-name {
+      font-family: 'Oswald';
+      font-size: 1.2rem;
+      color: var(--text-white);
+      margin-bottom: 5px;
+    }
+
+    .tf-story {
+      color: var(--text-light);
+      font-size: 0.9rem;
+      font-style: italic;
+    }
 
     /* REVIEWS */
     .review-grid {
@@ -343,7 +409,9 @@
       
       .showcase-item { flex-direction: row; }
       .showcase-text { padding-left: 20px; }
+      .placeholder-img { width: 200px; height: 220px; flex-shrink: 0; }
       
+      .tf-grid { grid-template-columns: repeat(2, 1fr); }
       .review-grid { grid-template-columns: repeat(3, 1fr); }
       
       .btn { width: auto; display: inline-block; }
@@ -369,7 +437,7 @@
     
     <a href="#pricing" class="btn">START MY TRANSFORMATION</a>
 
-    <div style="margin-top: 40px; font-size: 0.9rem; color: var(--text-light);">
+    <div style="margin-top: 30px; font-size: 0.9rem; color: var(--text-light);">
       Based on David Carter's story • Age 52 Transformation
     </div>
   </header>
@@ -409,7 +477,8 @@
       <h2 class="reveal" style="text-align: center;">Everything You Get</h2>
       
       <div class="showcase-item reveal stagger-1">
-        <div class="placeholder-img">[WORKOUT PDF COVER IMAGE HERE]</div>
+        <!-- PLACEHOLDER COVER IMAGE -->
+        <img src="https://placehold.co/200x250/0f172a/3b82f6?text=EBOOK+COVER+PHASE+1" alt="Workout Cover" class="placeholder-img">
         <div class="showcase-text">
           <h3>Phase 1: Wake Up Protocol</h3>
           <ul class="feature-list">
@@ -421,7 +490,8 @@
       </div>
 
       <div class="showcase-item reveal stagger-2">
-        <div class="placeholder-img">[MEAL PLAN BOOK COVER HERE]</div>
+         <!-- PLACEHOLDER COVER IMAGE -->
+         <img src="https://placehold.co/200x250/0f172a/3b82f6?text=EBOOK+COVER+MEALS" alt="Meal Plan Cover" class="placeholder-img">
         <div class="showcase-text">
           <h3>The Nutrition Blueprint</h3>
           <ul class="feature-list">
@@ -434,81 +504,62 @@
     </div>
   </section>
 
-  <!-- REVIEWS -->
-  <section id="reviews">
+  <!-- REAL RESULTS -->
+  <section id="transformations" class="transformation-section">
     <div class="container">
       <h2 class="reveal" style="text-align: center;">Real Results From Real Dads</h2>
-      <div class="review-grid">
+      
+      <div class="tf-grid">
         
-        <div class="review-card reveal stagger-1">
-          <div class="stars">★★★★★</div>
-          <p class="review-text">"I lost 15lbs in month 1. It's not magic, it just fits my schedule."</p>
-          <div class="reviewer-info">
-            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="James" class="avatar">
-            <div class="reviewer-details">
-              <h4>James W., 48</h4>
-              <span>Engineer</span>
-            </div>
+        <!-- Story 1 -->
+        <div class="tf-card reveal">
+          <div class="tf-image-container">
+            <!-- Placeholder Before After Image -->
+            <img src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Body Transformation">
+            <div class="tf-badge">Lost 30lbs</div>
+          </div>
+          <div class="tf-info">
+            <div class="tf-name">James W., 48</div>
+            <p class="tf-story">"Engineer. Used to come home too tired to lift a finger. Now I have more energy than my kids."</p>
           </div>
         </div>
 
-        <div class="review-card reveal stagger-2">
-          <div class="stars">★★★★★</div>
-          <p class="review-text">"Stopped guessing at the gym. The tracker keeps me honest even on busy days."</p>
-          <div class="reviewer-info">
-            <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="David" class="avatar">
-            <div class="reviewer-details">
-              <h4>David C., 52</h4>
-              <span>Sales Director</span>
-            </div>
+        <!-- Story 2 -->
+        <div class="tf-card reveal stagger-1">
+          <div class="tf-image-container">
+             <!-- Placeholder Before After Image -->
+            <img src="https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Body Transformation">
+            <div class="tf-badge">Fat Loss + Muscle</div>
+          </div>
+          <div class="tf-info">
+            <div class="tf-name">Michael R., 55</div>
+            <p class="tf-story">"Father of 3. I lost the gut that had been there for 15 years just by eating smarter."</p>
           </div>
         </div>
 
-        <div class="review-card reveal stagger-3">
-          <div class="stars">★★★★★</div>
-          <p class="review-text">"Finally feel energetic during the school run. The meals were simple."</p>
-          <div class="reviewer-info">
-            <img src="https://randomuser.me/api/portraits/men/11.jpg" alt="Mike" class="avatar">
-            <div class="reviewer-details">
-              <h4>Mike T., 41</h4>
-              <span>Teacher</span>
-            </div>
+        <!-- Story 3 -->
+        <div class="tf-card reveal stagger-2">
+          <div class="tf-image-container">
+             <!-- Placeholder Before After Image -->
+            <img src="https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Body Transformation">
+            <div class="tf-badge">Strength Gain</div>
+          </div>
+          <div class="tf-info">
+            <div class="tf-name">David C., 52</div>
+            <p class="tf-story">"I was skeptical at first. Now I've hit numbers I haven't seen since my 20s."</p>
           </div>
         </div>
 
-        <div class="review-card reveal stagger-1">
-          <div class="stars">★★★★★</div>
-          <p class="review-text">"Lost the gut and built arms again. Best investment I've made for myself."</p>
-          <div class="reviewer-info">
-            <img src="https://randomuser.me/api/portraits/men/65.jpg" alt="Tom" class="avatar">
-            <div class="reviewer-details">
-              <h4>Tom B., 55</h4>
-              <span>Father of 3</span>
-            </div>
+        <!-- Story 4 -->
+        <div class="tf-card reveal stagger-3">
+          <div class="tf-image-container">
+             <!-- Placeholder Before After Image -->
+            <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Body Transformation">
+            <div class="tf-badge">Total Refill</div>
           </div>
-        </div>
-
-        <div class="review-card reveal stagger-2">
-          <div class="stars">★★★★★</div>
-          <p class="review-text">"The 3x week plan was perfect. I actually finished it before the kids needed lunch."</p>
-          <div class="reviewer-info">
-            <img src="https://randomuser.me/api/portraits/men/22.jpg" alt="Steve" class="avatar">
-            <div class="reviewer-details">
-              <h4>Steve R., 44</h4>
-              <span>Accountant</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="review-card reveal stagger-3">
-          <div class="stars">★★★★★</div>
-          <p class="review-text">"My wife noticed first! She asked how I had the energy to play with the kids again."</p>
-          <div class="reviewer-info">
-            <img src="https://randomuser.me/api/portraits/men/88.jpg" alt="Paul" class="avatar">
-            <div class="reviewer-details">
-              <h4>Paul K., 49</h4>
-              <span>IT Manager</span>
-            </div>
+          <div class="tf-info">
+            <div class="tf-name">Thomas K., 60</div>
+            <p class="tf-story">"Thought I was past prime. My wife noticed my clothes fitting differently within week 3."</p>
           </div>
         </div>
 
@@ -535,43 +586,6 @@
 
         <!-- REPLACE WITH YOUR SHOPIFY CHECKOUT LINK BELOW -->
         <a href="https://your-shopify-checkout-link.com/products/the-iron-dad-system" class="btn">BUY NOW →</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- FAQ -->
-  <section>
-    <div class="container">
-      <h2 class="text-center" style="margin-bottom: 40px;">Common Questions</h2>
-      
-      <div class="reveal">
-        <details>
-          <summary>Do I need a gym?</summary>
-          <div class="answer-box">
-            No. This program uses calisthenics and bodyweight movements designed to be done in a living room or garage.
-          </div>
-        </details>
-        
-        <details>
-          <summary>Is this suitable for beginners?</summary>
-          <div class="answer-box">
-            Yes. Phase 1 is specifically designed to rebuild your foundation safely so you don't get injured when returning to fitness.
-          </div>
-        </details>
-
-        <details>
-          <summary>How long do the workouts take?</summary>
-          <div class="answer-box">
-            Each workout is high intensity but short. The average session takes about 45 minutes from start to finish.
-          </div>
-        </details>
-
-        <details>
-          <summary>What if I'm over 50?</summary>
-          <div class="answer-box">
-            Absolutely. Our founder started at 52. The plan focuses on joint health and functional strength rather than heavy lifting.
-          </div>
-        </details>
       </div>
     </div>
   </section>
