@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -78,7 +77,7 @@
       cursor: pointer;
       margin-top: 15px;
       position: relative;
-      overflow: hidden;
+      z-index: 10;
     }
 
     .btn:hover {
@@ -191,7 +190,7 @@
 
     .check-mark { color: var(--accent-blue); font-weight: bold; font-size: 1.1rem; }
 
-    .placeholder-img {
+    .product-cover {
       width: 100%;
       height: 220px;
       background: #0f172a;
@@ -206,6 +205,7 @@
       padding: 20px;
       overflow: hidden;
       object-fit: cover;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
     }
 
     .showcase-text { flex: 1; padding-left: 10px; }
@@ -335,6 +335,7 @@
       margin: 0 auto;
       box-shadow: 0 20px 50px rgba(0,0,0,0.8);
       position: relative;
+      overflow: hidden;
     }
 
     .price-val {
@@ -402,6 +403,18 @@
 
     footer a { color: var(--text-white); text-decoration: none; }
 
+    /* BACK IMAGE BELOW BUTTON */
+    .back-silhouette {
+      max-width: 100%;
+      height: auto;
+      width: 250px;
+      margin-top: 25px;
+      opacity: 0.9;
+      filter: brightness(0.85) contrast(1.1);
+      display: block;
+      border-radius: 8px;
+    }
+
     /* DESKTOP RESPONSIVENESS */
     @media (min-width: 768px) {
       h1 { font-size: 4rem; }
@@ -409,7 +422,7 @@
       
       .showcase-item { flex-direction: row; }
       .showcase-text { padding-left: 20px; }
-      .placeholder-img { width: 200px; height: 220px; flex-shrink: 0; }
+      .product-cover { width: 180px; height: 220px; flex-shrink: 0; }
       
       .tf-grid { grid-template-columns: repeat(2, 1fr); }
       .review-grid { grid-template-columns: repeat(3, 1fr); }
@@ -477,12 +490,12 @@
       <h2 class="reveal" style="text-align: center;">Everything You Get</h2>
       
       <div class="showcase-item reveal stagger-1">
-        <!-- PLACEHOLDER COVER IMAGE -->
-        <img src="https://placehold.co/200x250/0f172a/3b82f6?text=EBOOK+COVER+PHASE+1" alt="Workout Cover" class="placeholder-img">
+        <!-- EBOOK COVER PLACEHOLDER - REPLACE WITH YOUR ACTUAL COVER IMAGE -->
+        <img src="https://placehold.co/200x250/0f172a/3b82f6?text=WORKOUT+GUIDE" alt="Workout Cover" class="product-cover">
         <div class="showcase-text">
           <h3>Phase 1: Wake Up Protocol</h3>
           <ul class="feature-list">
-            <li><span class="check-mark">✓</span> Full Video Guides</li>
+            <li><span class="check-mark">✓</span> Comprehensive PDF Workbooks</li>
             <li><span class="check-mark">✓</span> Calisthenics Focused</li>
             <li><span class="check-mark">✓</span> Minimal Equipment Needed</li>
           </ul>
@@ -490,8 +503,8 @@
       </div>
 
       <div class="showcase-item reveal stagger-2">
-         <!-- PLACEHOLDER COVER IMAGE -->
-         <img src="https://placehold.co/200x250/0f172a/3b82f6?text=EBOOK+COVER+MEALS" alt="Meal Plan Cover" class="placeholder-img">
+        <!-- MEAL PLAN COVER PLACEHOLDER - REPLACE WITH YOUR ACTUAL COVER IMAGE -->
+        <img src="https://placehold.co/200x250/0f172a/3b82f6?text=MEAL+PLAN" alt="Meal Plan Cover" class="product-cover">
         <div class="showcase-text">
           <h3>The Nutrition Blueprint</h3>
           <ul class="feature-list">
@@ -514,7 +527,6 @@
         <!-- Story 1 -->
         <div class="tf-card reveal">
           <div class="tf-image-container">
-            <!-- Placeholder Before After Image -->
             <img src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Body Transformation">
             <div class="tf-badge">Lost 30lbs</div>
           </div>
@@ -527,8 +539,7 @@
         <!-- Story 2 -->
         <div class="tf-card reveal stagger-1">
           <div class="tf-image-container">
-             <!-- Placeholder Before After Image -->
-            <img src="https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Body Transformation">
+             <img src="https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Body Transformation">
             <div class="tf-badge">Fat Loss + Muscle</div>
           </div>
           <div class="tf-info">
@@ -540,8 +551,7 @@
         <!-- Story 3 -->
         <div class="tf-card reveal stagger-2">
           <div class="tf-image-container">
-             <!-- Placeholder Before After Image -->
-            <img src="https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Body Transformation">
+             <img src="https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Body Transformation">
             <div class="tf-badge">Strength Gain</div>
           </div>
           <div class="tf-info">
@@ -553,8 +563,7 @@
         <!-- Story 4 -->
         <div class="tf-card reveal stagger-3">
           <div class="tf-image-container">
-             <!-- Placeholder Before After Image -->
-            <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Body Transformation">
+             <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Body Transformation">
             <div class="tf-badge">Total Refill</div>
           </div>
           <div class="tf-info">
@@ -584,8 +593,12 @@
 
         <br>
 
-        <!-- REPLACE WITH YOUR SHOPIFY CHECKOUT LINK BELOW -->
+        <!-- SHOPIFY LINK HERE -->
         <a href="https://your-shopify-checkout-link.com/products/the-iron-dad-system" class="btn">BUY NOW →</a>
+        
+        <!-- MAN'S BACK IMAGE (Dark PNG) -->
+        <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=1000&auto=format&fit=crop" alt="Strong Back" class="back-silhouette">
+        
       </div>
     </div>
   </section>
